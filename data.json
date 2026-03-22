@@ -1,44 +1,146 @@
 {
-  "lastUpdated": "2026-03-22T09:05:00Z",
-  "status": "Generation 3 In Progress",
+  "lastUpdated": "2026-03-22T09:52:06Z",
+  "status": "Generation 4 In Progress",
   "generations": [
     {
       "name": "Gen 0",
-      "avgFitness": 27.5,
+      "avgFitness": 27.87,
       "bestFitness": 29.75,
-      "topic": "a dystopian story at dawn",
+      "topic": "unknown",
       "rankings": [
-        { "id": "P001", "type": "Minimalist", "fitness": 29.75 },
-        { "id": "P004", "type": "Literary Focus", "fitness": 29.75 },
-        { "id": "P011", "type": "Show Don't Tell", "fitness": 29.75 },
-        { "id": "P008", "type": "Creative Risk", "fitness": 29.0 },
-        { "id": "P007", "type": "Tension Focus", "fitness": 28.5 },
-        { "id": "P012", "type": "Memorable", "fitness": 28.0 },
-        { "id": "P006", "type": "Structure", "fitness": 27.25 },
-        { "id": "P005", "type": "Comprehensive", "fitness": 26.75 },
-        { "id": "P002", "type": "Detailed", "fitness": 26.25 },
-        { "id": "P010", "type": "Minimal+", "fitness": 25.5 },
-        { "id": "P003", "type": "Concise", "fitness": 25.0 },
-        { "id": "P009", "type": "Hybrid Minimal", "fitness": 22.25 }
+        {
+          "id": "P001",
+          "type": "Minimalist",
+          "fitness": 29.75
+        },
+        {
+          "id": "P004",
+          "type": "Literary Focus",
+          "fitness": 29.75
+        },
+        {
+          "id": "P011",
+          "type": "Show Don't Tell",
+          "fitness": 29.75
+        },
+        {
+          "id": "P008",
+          "type": "Detailed",
+          "fitness": 29.5
+        },
+        {
+          "id": "P008",
+          "type": "Detailed",
+          "fitness": 29.5
+        },
+        {
+          "id": "P007",
+          "type": "Sparse",
+          "fitness": 28.5
+        },
+        {
+          "id": "P012",
+          "type": "Risk-Taker",
+          "fitness": 28.5
+        },
+        {
+          "id": "P006",
+          "type": "Balanced",
+          "fitness": 28.0
+        },
+        {
+          "id": "P003",
+          "type": "Creative-First",
+          "fitness": 27.25
+        },
+        {
+          "id": "P005",
+          "type": "Character-Centric",
+          "fitness": 27.25
+        },
+        {
+          "id": "P010",
+          "type": "Emotional Anchor",
+          "fitness": 27.25
+        },
+        {
+          "id": "P002",
+          "type": "Structured",
+          "fitness": 25.0
+        },
+        {
+          "id": "P009",
+          "type": "Hybrid Minimal",
+          "fitness": 22.25
+        }
       ]
     },
     {
       "name": "Gen 1",
-      "avgFitness": 30.23,
-      "bestFitness": 33.75,
+      "avgFitness": 28.06,
+      "bestFitness": 32.5,
       "topic": "a mystery story at a small coastal town",
       "rankings": [
-        { "id": "P102", "type": "Elite Literary", "fitness": 33.75 },
-        { "id": "P109", "type": "Novel Combo", "fitness": 31.75 },
-        { "id": "P108", "type": "Creative Risk", "fitness": 31.25 },
-        { "id": "P104", "type": "Crossover Lit+Creative", "fitness": 31.25 },
-        { "id": "P111", "type": "Enhanced Literary", "fitness": 31.25 },
-        { "id": "P101", "type": "Elite Minimalist", "fitness": 31.0 },
-        { "id": "P110", "type": "Minimalist+Memorable", "fitness": 29.5 },
-        { "id": "P106", "type": "Elision", "fitness": 28.75 },
-        { "id": "P105", "type": "Minimalist+Tension", "fitness": 28.25 },
-        { "id": "P112", "type": "Reconstructed", "fitness": 28.25 },
-        { "id": "P103", "type": "Crossover", "fitness": 28.0 }
+        {
+          "id": "P107",
+          "type": "Crossover (P011\u00d7P007)",
+          "fitness": 32.5
+        },
+        {
+          "id": "P109",
+          "type": "Novel Combination",
+          "fitness": 31.75
+        },
+        {
+          "id": "P104",
+          "type": "Crossover (P004\u00d7P008)",
+          "fitness": 31.25
+        },
+        {
+          "id": "P108",
+          "type": "Creative Risk Only",
+          "fitness": 31.25
+        },
+        {
+          "id": "P111",
+          "type": "Enhanced Literary",
+          "fitness": 31.25
+        },
+        {
+          "id": "P101",
+          "type": "Elite Minimalist",
+          "fitness": 31.0
+        },
+        {
+          "id": "P110",
+          "type": "Minimalist+Memorable",
+          "fitness": 29.5
+        },
+        {
+          "id": "P106",
+          "type": "Elision (P004 simplified)",
+          "fitness": 28.75
+        },
+        {
+          "id": "P105",
+          "type": "Minimalist+Tension",
+          "fitness": 28.25
+        },
+        {
+          "id": "P112",
+          "type": "Reconstructed (P009 fix)",
+          "fitness": 28.25
+        },
+        {
+          "id": "P103",
+          "type": "Crossover (P001\u00d7P011)",
+          "fitness": 28.0
+        },
+        {
+          "id": "P102",
+          "type": "Elite Literary",
+          "fitness": 5.0
+        }
       ]
     },
     {
@@ -47,26 +149,61 @@
       "bestFitness": 35.25,
       "topic": "a horror story during a storm",
       "rankings": [
-        { "id": "P203", "type": "Crossover P109×P108", "fitness": 35.25 },
-        { "id": "P206", "type": "Point Mutation P101+creative", "fitness": 34.75 },
-        { "id": "P202", "type": "Elite Literary v2", "fitness": 31.75 },
-        { "id": "P204", "type": "Crossover P102×P111", "fitness": 31.75 },
-        { "id": "P207", "type": "Crossover P107×P102", "fitness": 31.75 },
-        { "id": "P208", "type": "Crossover P109×P104", "fitness": 31.75 },
-        { "id": "P209", "type": "Crossover P108×P111", "fitness": 31.75 },
-        { "id": "P205", "type": "Crossover P102×P109", "fitness": 30.75 },
-        { "id": "P210", "type": "Point Mutation P106+creative", "fitness": 30.5 },
-        { "id": "P201", "type": "Elite Literary (clone)", "fitness": 29.75 }
+        {
+          "id": "P203",
+          "type": "Crossover (P109\u00d7P108)",
+          "fitness": 35.25
+        },
+        {
+          "id": "P206",
+          "type": "Point Mutation (P101+creative)",
+          "fitness": 34.75
+        },
+        {
+          "id": "P202",
+          "type": "Elite Literary v2 (reclone)",
+          "fitness": 31.75
+        },
+        {
+          "id": "P204",
+          "type": "Crossover (P102\u00d7P111)",
+          "fitness": 31.75
+        },
+        {
+          "id": "P207",
+          "type": "Crossover (P107\u00d7P102)",
+          "fitness": 31.75
+        },
+        {
+          "id": "P208",
+          "type": "Crossover (P109\u00d7P104)",
+          "fitness": 31.75
+        },
+        {
+          "id": "P209",
+          "type": "Crossover (P108\u00d7P111)",
+          "fitness": 31.75
+        },
+        {
+          "id": "P205",
+          "type": "Crossover (P102\u00d7P109)",
+          "fitness": 30.75
+        },
+        {
+          "id": "P210",
+          "type": "Point Mutation (P106+creative)",
+          "fitness": 30.5
+        },
+        {
+          "id": "P201",
+          "type": "Elite Literary (clone)",
+          "fitness": 29.75
+        }
       ]
     }
   ],
   "keyFindings": [
-    "P203 (Crossover P109×P108) set new experiment high at 35.25 — combining Novel Combo + Creative Risk produced best results",
-    "Point mutation validated — adding creative/literary to minimalist base improved P101 from 31.0 → 34.75 (P206)",
-    "Topic variance confirmed — same prompt scored differently across topics (P102: 33.75 mystery vs P201: 29.75 horror)",
-    "Five-way tie at 31.75 — multiple crossover strategies converged on similar fitness, suggesting plateau",
-    "Flow/mechanics maxed out — Gen 2 avg 4.8/5.0, approaching ceiling",
-    "Character stuck at 3 — persistent limitation across all generations (short format constraint)"
+    "Experiment in progress - findings will be updated after evaluation"
   ],
-  "winningPrompt": "Write a short story. Aim for literary quality. Surprise the reader with unexpected turns. Make every word count. Show, don't tell where possible."
+  "winningPrompt": "To be determined"
 }
