@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Prompt Evolution Experiment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0a0f;
+            --card: #12121a;
+            --border: #2a2a3a;
+            --text: #e0e0e5;
+            --muted: #8888aa;
+            --accent: #00d4aa;
+            --accent2: #ff6b6b;
+            --gold: #ffd700;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        .status-running { background: var(--accent); color: var(--bg); }
+        .status-complete { background: var(--gold); color: var(--bg); }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .card h3 {
+            color: var(--muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .card .delta {
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        
+        .delta.positive { color: var(--accent); }
+        .delta.negative { color: var(--accent2); }
+        
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .rank-1 { background: linear-gradient(90deg, rgba(255,215,0,0.1), transparent); }
+        .rank-1 td:first-child::before { content: '🏆 '; }
+        
+        .rank-2 { background: linear-gradient(90deg, rgba(192,192,192,0.1), transparent); }
+        .rank-2 td:first-child::before { content: '🥈 '; }
+        
+        .rank-3 { background: linear-gradient(90deg, rgba(205,127,50,0.1), transparent); }
+        .rank-3 td:first-child::before { content: '🥉 '; }
+        
+        .fitness-bar {
+            display: inline-block;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--accent);
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 100%;
+            gap: 1rem;
+        }
+        
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .bar {
+            width: 100%;
+            max-width: 60px;
+            background: linear-gradient(180deg, var(--accent), #006655);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+        }
+        
+        .bar-label {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+        
+        .bar-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .findings {
+            list-style: none;
+        }
+        
+        .findings li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .findings li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        .findings li strong {
+            color: var(--accent);
+        }
+        
+        .prompt-box {
+            background: rgba(0,0,0,0.3);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tab {
+            padding: 0.5rem 1rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .tab:hover {
+            border-color: var(--accent);
+        }
+        
+        .tab.active {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        
+        .update-time {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.75rem; }
+            .card .value { font-size: 2rem; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧬 Story Prompt Evolution</h1>
+            <p class="subtitle">Evolutionary optimization of LLM prompt templates using fitness-based selection</p>
+            <span class="status-badge status-running" id="status-badge">Generation 3 In Progress</span>
+            <p class="update-time">Last updated: <span id="update-time">Loading...</span></p>
+        </header>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>Current Best Fitness</h3>
+                <div class="value" id="best-fitness">35.25</div>
+                <div class="delta positive" id="best-delta">+5.5 from Gen 0</div>
+            </div>
+            <div class="card">
+                <h3>Generation</h3>
+                <div class="value" id="current-gen">2</div>
+                <div class="delta">of target 5-10</div>
+            </div>
+            <div class="card">
+                <h3>Avg Fitness</h3>
+                <div class="value" id="avg-fitness">31.98</div>
+                <div class="delta positive" id="avg-delta">+4.48 from Gen 0</div>
+            </div>
+            <div class="card">
+                <h3>Stories Evaluated</h3>
+                <div class="value" id="total-stories">34</div>
+                <div class="delta">across 3 topics</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📊 Cross-Generation Progress</h2>
+            <div class="chart-container">
+                <div class="bar-chart" id="progress-chart">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🏆 Generation Rankings</h2>
+            <div class="tabs">
+                <button class="tab active" onclick="showGen('gen0')">Gen 0</button>
+                <button class="tab" onclick="showGen('gen1')">Gen 1</button>
+                <button class="tab active" onclick="showGen('gen2')">Gen 2</button>
+            </div>
+            
+            <div id="gen0" class="tab-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Prompt ID</th>
+                            <th>Type</th>
+                            <th>Fitness</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gen0-body"></tbody>
+                </table>
+            </div>
+            
+            <div id="gen1" class="tab-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Prompt ID</th>
+                            <th>Type</th>
+                            <th>Fitness</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gen1-body"></tbody>
+                </table>
+            </div>
+            
+            <div id="gen2" class="tab-content active">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Prompt ID</th>
+                            <th>Type</th>
+                            <th>Fitness</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gen2-body"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>💡 Key Findings</h2>
+            <ul class="findings" id="key-findings">
+                <li><strong>P203 (Crossover P109×P108) set new experiment high at 35.25</strong> — combining Novel Combo + Creative Risk produced best results</li>
+                <li><strong>Point mutation validated</strong> — adding creative/literary to minimalist base improved P101 from 31.0 → 34.75 (P206)</li>
+                <li><strong>Topic variance confirmed</strong> — same prompt scored differently across topics (P102: 33.75 mystery vs P201: 29.75 horror)</li>
+                <li><strong>Five-way tie at 31.75</strong> — multiple crossover strategies converged on similar fitness, suggesting plateau</li>
+                <li><strong>Flow/mechanics maxed out</strong> — Gen 2 avg 4.8/5.0, approaching ceiling</li>
+                <li><strong>Character stuck at 3</strong> — persistent limitation across all generations (short format constraint)</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 Winning Prompt (P203)</h2>
+            <div class="prompt-box">
+                Write a short story. Aim for literary quality. Surprise the reader with unexpected turns. Make every word count. Show, don't tell where possible.
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📐 Fitness Function</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Weight</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Creativity</td><td>1.5×</td><td>Originality and imaginative elements</td></tr>
+                    <tr><td>Flow</td><td>1.5×</td><td>Pacing and narrative momentum</td></tr>
+                    <tr><td>Characters</td><td>1.0×</td><td>Depth and authenticity</td></tr>
+                    <tr><td>Setting</td><td>0.75×</td><td>Atmosphere and world-building</td></tr>
+                    <tr><td>Style</td><td>1.0×</td><td>Prose quality and voice</td></tr>
+                    <tr><td>Theme</td><td>1.0×</td><td>Depth of meaning</td></tr>
+                    <tr><td>Mechanics</td><td>0.5×</td><td>Grammar and structure</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <footer>
+            <p>Story Prompt Evolution Experiment • LLM-as-Judge Evaluation</p>
+            <p>OpenClaw AI Lab • 2026</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Data will be loaded from JSON file
+        let experimentData = {
+            generations: [
+                {
+                    name: "Gen 0",
+                    avgFitness: 27.5,
+                    bestFitness: 29.75,
+                    topic: "dystopian story at dawn",
+                    rankings: [
+                        { id: "P001", type: "Minimalist", fitness: 29.75 },
+                        { id: "P004", type: "Literary Focus", fitness: 29.75 },
+                        { id: "P011", type: "Show Don't Tell", fitness: 29.75 },
+                        { id: "P008", type: "Creative Risk", fitness: 29.0 },
+                        { id: "P007", type: "Tension Focus", fitness: 28.5 },
+                        { id: "P012", type: "Memorable", fitness: 28.0 },
+                        { id: "P006", type: "Structure", fitness: 27.25 },
+                        { id: "P005", type: "Comprehensive", fitness: 26.75 },
+                        { id: "P002", type: "Detailed", fitness: 26.25 },
+                        { id: "P010", type: "Minimal+", fitness: 25.5 },
+                        { id: "P003", type: "Concise", fitness: 25.0 },
+                        { id: "P009", type: "Hybrid Minimal", fitness: 22.25 }
+                    ]
+                },
+                {
+                    name: "Gen 1",
+                    avgFitness: 30.23,
+                    bestFitness: 33.75,
+                    topic: "mystery story at a small coastal town",
+                    rankings: [
+                        { id: "P102", type: "Elite Literary", fitness: 33.75 },
+                        { id: "P109", type: "Novel Combo", fitness: 31.75 },
+                        { id: "P108", type: "Creative Risk", fitness: 31.25 },
+                        { id: "P104", type: "Crossover Lit+Creative", fitness: 31.25 },
+                        { id: "P111", type: "Enhanced Literary", fitness: 31.25 },
+                        { id: "P101", type: "Elite Minimalist", fitness: 31.0 },
+                        { id: "P110", type: "Minimalist+Memorable", fitness: 29.5 },
+                        { id: "P106", type: "Elision", fitness: 28.75 },
+                        { id: "P105", type: "Minimalist+Tension", fitness: 28.25 },
+                        { id: "P112", type: "Reconstructed", fitness: 28.25 },
+                        { id: "P103", type: "Crossover", fitness: 28.0 }
+                    ]
+                },
+                {
+                    name: "Gen 2",
+                    avgFitness: 31.98,
+                    bestFitness: 35.25,
+                    topic: "horror story during a storm",
+                    rankings: [
+                        { id: "P203", type: "Crossover P109×P108", fitness: 35.25 },
+                        { id: "P206", type: "Point Mutation P101+creative", fitness: 34.75 },
+                        { id: "P202", type: "Elite Literary v2", fitness: 31.75 },
+                        { id: "P204", type: "Crossover P102×P111", fitness: 31.75 },
+                        { id: "P207", type: "Crossover P107×P102", fitness: 31.75 },
+                        { id: "P208", type: "Crossover P109×P104", fitness: 31.75 },
+                        { id: "P209", type: "Crossover P108×P111", fitness: 31.75 },
+                        { id: "P205", type: "Crossover P102×P109", fitness: 30.75 },
+                        { id: "P210", type: "Point Mutation P106+creative", fitness: 30.5 },
+                        { id: "P201", type: "Elite Literary (clone)", fitness: 29.75 }
+                    ]
+                }
+            ],
+            lastUpdated: new Date().toISOString()
+        };
+        
+        function updateUI() {
+            const gens = experimentData.generations;
+            const latest = gens[gens.length - 1];
+            const first = gens[0];
+            
+            // Update stats
+            document.getElementById('best-fitness').textContent = latest.bestFitness.toFixed(2);
+            document.getElementById('current-gen').textContent = gens.length - 1;
+            document.getElementById('avg-fitness').textContent = latest.avgFitness.toFixed(2);
+            document.getElementById('total-stories').textContent = gens.reduce((sum, g) => sum + g.rankings.length, 0);
+            
+            const bestDelta = latest.bestFitness - first.bestFitness;
+            document.getElementById('best-delta').textContent = `${bestDelta >= 0 ? '+' : ''}${bestDelta.toFixed(2)} from Gen 0`;
+            document.getElementById('best-delta').className = `delta ${bestDelta >= 0 ? 'positive' : 'negative'}`;
+            
+            const avgDelta = latest.avgFitness - first.avgFitness;
+            document.getElementById('avg-delta').textContent = `${avgDelta >= 0 ? '+' : ''}${avgDelta.toFixed(2)} from Gen 0`;
+            document.getElementById('avg-delta').className = `delta ${avgDelta >= 0 ? 'positive' : 'negative'}`;
+            
+            document.getElementById('update-time').textContent = new Date(experimentData.lastUpdated).toLocaleString();
+            
+            // Build progress chart
+            const maxFitness = Math.max(...gens.map(g => g.bestFitness));
+            const chartHtml = gens.map(g => {
+                const height = (g.bestFitness / maxFitness * 250);
+                return `
+                    <div class="bar-group">
+                        <div class="bar-value">${g.bestFitness.toFixed(2)}</div>
+                        <div class="bar" style="height: ${height}px;"></div>
+                        <div class="bar-label">${g.name}<br><small>${g.topic.split(' ').slice(0,2).join(' ')}...</small></div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('progress-chart').innerHTML = chartHtml;
+            
+            // Populate tables
+            gens.forEach((gen, i) => {
+                const tbody = document.getElementById(`gen${i}-body`);
+                if (tbody) {
+                    tbody.innerHTML = gen.rankings.map((r, ri) => `
+                        <tr class="${ri < 3 ? 'rank-' + (ri + 1) : ''}">
+                            <td>${ri + 1}</td>
+                            <td>${r.id}</td>
+                            <td>${r.type}</td>
+                            <td>
+                                ${r.fitness.toFixed(2)}
+                                <span class="fitness-bar" style="width: ${(r.fitness / 40 * 100)}px;"></span>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            });
+        }
+        
+        function showGen(genId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(genId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Load data from JSON file if available
+        fetch('data.json')
+            .then(r => r.json())
+            .then(data => {
+                experimentData = data;
+                updateUI();
+            })
+            .catch(() => {
+                // Use embedded data if no JSON file
+                updateUI();
+            });
+    </script>
+</body>
+</html>
