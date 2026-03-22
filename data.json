@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-03-22T09:52:06Z",
-  "status": "Generation 4 In Progress",
+  "lastUpdated": "2026-03-22T10:00:56Z",
+  "status": "Generation 5 In Progress",
   "generations": [
     {
       "name": "Gen 0",
@@ -198,6 +198,64 @@
           "id": "P201",
           "type": "Elite Literary (clone)",
           "fitness": 29.75
+        }
+      ]
+    },
+    {
+      "name": "Gen 3",
+      "avgFitness": 32.48,
+      "bestFitness": 35.5,
+      "topic": "a romance story in a bookstore",
+      "rankings": [
+        {
+          "id": "P304",
+          "type": "Elision (P203 simplified)",
+          "fitness": 35.5
+        },
+        {
+          "id": "P301",
+          "type": "Elite P203 (preserved)",
+          "fitness": 35.25
+        },
+        {
+          "id": "P302",
+          "type": "Elite P206 (preserved)",
+          "fitness": 35.25
+        },
+        {
+          "id": "P305",
+          "type": "Point Mutation (P203+tension)",
+          "fitness": 32.0
+        },
+        {
+          "id": "P307",
+          "type": "Novel (literary+creative+minimal)",
+          "fitness": 31.75
+        },
+        {
+          "id": "P306",
+          "type": "Crossover (P206\u00d7P208)",
+          "fitness": 31.5
+        },
+        {
+          "id": "P310",
+          "type": "Reconstruction (P201+creative)",
+          "fitness": 31.5
+        },
+        {
+          "id": "P308",
+          "type": "Crossover (P203\u00d7P209)",
+          "fitness": 31.25
+        },
+        {
+          "id": "P309",
+          "type": "Enhanced P203",
+          "fitness": 30.5
+        },
+        {
+          "id": "P303",
+          "type": "Crossover (P203\u00d7P206)",
+          "fitness": 30.25
         }
       ]
     }
