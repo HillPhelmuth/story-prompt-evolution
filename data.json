@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-03-23T08:22:35Z",
-  "status": "Generation 5 In Progress",
+  "lastUpdated": "2026-03-23T08:24:25Z",
+  "status": "Generation 5 Complete",
   "generations": [
     {
       "name": "Gen 0",
@@ -256,6 +256,64 @@
           "id": "P303",
           "type": "Crossover (P203\u00d7P206)",
           "fitness": 30.25
+        }
+      ]
+    },
+    {
+      "name": "Gen 4",
+      "avgFitness": 33.38,
+      "bestFitness": 34.75,
+      "topic": "a science fiction story about first contact",
+      "rankings": [
+        {
+          "id": "P402",
+          "type": "Elite P206 (preserved)",
+          "fitness": 34.75
+        },
+        {
+          "id": "P406",
+          "type": "Elision (P304 -count)",
+          "fitness": 34.75
+        },
+        {
+          "id": "P410",
+          "type": "P304 -2 (surprise only)",
+          "fitness": 34.75
+        },
+        {
+          "id": "P405",
+          "type": "Elision (P304 -surprise)",
+          "fitness": 33.92
+        },
+        {
+          "id": "P403",
+          "type": "Elite P304 (preserved)",
+          "fitness": 33.0
+        },
+        {
+          "id": "P404",
+          "type": "Elision (P304 -literary)",
+          "fitness": 33.0
+        },
+        {
+          "id": "P408",
+          "type": "Bare minimum",
+          "fitness": 33.0
+        },
+        {
+          "id": "P409",
+          "type": "P304 -2 (literary only)",
+          "fitness": 33.0
+        },
+        {
+          "id": "P407",
+          "type": "Ultra-minimal P304",
+          "fitness": 32.0
+        },
+        {
+          "id": "P401",
+          "type": "Elite P203 (preserved)",
+          "fitness": 31.67
         }
       ]
     }
